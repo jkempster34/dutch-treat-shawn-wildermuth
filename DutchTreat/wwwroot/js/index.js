@@ -1,10 +1,20 @@
-﻿
+﻿$(document).ready(function () {
 
-const theForm = document.getElementById("theForm");
-theForm.hidden = true;
+    const theForm = $("#theForm");
+    theForm.hide();
 
-const button = document.getElementById("buyButton");
-button.addEventListener("click", () => console.log("Buying item"));
+    const button = $("#buyButton");
+    button.on("click", () => console.log("Buying item"));
 
-const productInfo = document.getElementsByClassName("product-props");
-const listItems = productInfo.item[0].children;
+    const productInfo = $(".product-props li");
+    productInfo.on("click", function () {
+        console.log("You clicked on " + $(this).text());
+    })
+
+    const $loginToggle = $("#loginToggle");
+    const $popupForm = $(".popup-form");
+
+    $loginToggle.on("click", () => {
+        $popupForm.fadeToggle(1000);
+    })
+})
