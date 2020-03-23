@@ -17,6 +17,7 @@ namespace DutchTreat
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -28,9 +29,10 @@ namespace DutchTreat
             }
             else
             {
-
+                app.UseExceptionHandler("/Error");
             }
 
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseNodeModules();
 
@@ -56,10 +58,11 @@ namespace DutchTreat
                 endpoints.MapControllerRoute(
                     name: "Fallback",
                     pattern: "{controller}/{action}/{id?}", // URL with parameters
-                    // controller refers to contents of controllers folder (.cs file name with "contoller" suffix removed), action refers to the contents of that controller.
-                    // For example, going to <root>/App/Index will look in the controllers folder for "AppController", and within AppController, look for the "Index" action.
+                                                            // controller refers to contents of controllers folder (.cs file name with "contoller" suffix removed), action refers to the contents of that controller.
+                                                            // For example, going to <root>/App/Index will look in the controllers folder for "AppController", and within AppController, look for the "Index" action.
                     defaults: new { controller = "App", action = "Index" } // Parameter defaults. Default URL will be <root>/app/index
                     );
+                endpoints.MapRazorPages();
             });
         }
     }
