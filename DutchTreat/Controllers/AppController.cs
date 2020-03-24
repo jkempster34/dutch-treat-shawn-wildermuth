@@ -23,6 +23,14 @@ namespace DutchTreat.Controllers
         [HttpPost("contact")]
         public IActionResult Contact(ContactViewModel model) // Will map the name of the input fields in form to the properties of the ContactViewModel (case isn't crucial)
         {
+            if (ModelState.IsValid)
+            {
+                // Send the email
+            }
+            else
+            {
+                // Show errors
+            }
             return View();
         }
 
