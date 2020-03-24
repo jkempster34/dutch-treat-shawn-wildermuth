@@ -1,23 +1,26 @@
-﻿@{ 
+﻿@model ContactViewModel
+@{
     ViewBag.Title = "Contact Us";
 }
 
-<form method="post">
-    <label>Your Name:</label>
-    <br />
-    <input name="name"/>
-    <br />
-    <label>Email:</label>
-    <br />
-    <input type="email" name="email"/>
-    <br />
-    <label>Subject:</label>
-    <br />
-    <input type="text" name="subject"/>
-    <br />
-    <label> Message:</label>
-    <br />
-    <textarea rows="4" name="message"> </textarea>
-    <br />
-    <input type="submit" value="Send Message" />
-</form>
+    <form method="post">
+        <label asp-for="Name">Your Name:</label>
+        @*asp-for here generates HTML for attribute, focusses on  input when click label*@
+        <br />
+        <input asp-for="Name" />
+        @*asp-for here generates appropriate name and id attributes based on the ViewModel*@
+        <br />
+        <label asp-for="Email">Email:</label>
+        <br />
+        <input type="email" asp-for="Email" />
+        <br />
+        <label asp-for="Subject">Subject:</label>
+        <br />
+        <input type="text" asp-for="Subject" />
+        <br />
+        <label asp-for="Message"> Message:</label>
+        <br />
+        <textarea rows="4" asp-for="Message"> </textarea>
+        <br />
+        <input type="submit" value="Send Message" />
+    </form>
