@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DutchTreat.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -18,6 +19,9 @@ namespace DutchTreat
         {
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddTransient<IMailService, NullMailService>(); // Whenever the type 'IMailService' is asked for we get a new instance of the concrete 'NullMailService' type
+            // Support for real mail service would go here 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
