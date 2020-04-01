@@ -1,0 +1,10 @@
+﻿@*importing the model allows us to use intellisense to get the correct field rather that rely on
+    it being dynamic. This import could be removed it would still work*@
+@model IEnumerable<Product>
+
+<h1>Shop</h1>
+<p>Count: @Model.Count()</p>
+@foreach (var p in Model)
+{
+    <li>@p.Title</li>
+}

@@ -1,4 +1,5 @@
-﻿using DutchTreat.Services;
+﻿using DutchTreat.Data.Entities;
+using DutchTreat.Services;
 using DutchTreat.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,11 +11,19 @@ namespace DutchTreat.Controllers
 {
     public class AppController : Controller
     {
-        private readonly IMailService mailService;
+        private readonly IMailService _mailService;
+        private readonly DutchContext _context;
 
-        public AppController(IMailService mailService) // Startup.cs is set up so that whenever a IMailSerive is requested, we get a new NullMailService
+        /*
+         * MVC controllers request dependencies via constructors. These depoendencies are 
+         * injected in the StartUp.cs ConfigureServices method.
+         * 
+         * StartUp.cs is set up so that whenever a IMailService is requested, we get a new NullMailService.
+         */
+        public AppController(IMailService mailService, DutchContext context)
         {
-            this.mailService = mailService;
+            _mailService = mailService;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -33,7 +42,7 @@ namespace DutchTreat.Controllers
         {
             if (ModelState.IsValid)
             {
-                mailService.SendMessage("jkempster34@gmail.com", model.Subject, $"From: {model.Name} - {model.Email}, " +
+                _mailService.SendMessage("jkempster34@gmail.com", model.Subject, $"From: {model.Name} - {model.Email}, " +
                     $"Message {model.Message}");
                 ViewBag.UserMessage = "Mail Sent";
                 ModelState.Clear();
@@ -49,6 +58,15 @@ namespace DutchTreat.Controllers
         {
             ViewBag.Title = "About Us";
             return View();
+        }
+
+        public IActionResult Shop()
+        {
+            var results = from product in _context.Products
+                          orderby product.Category
+                          select product;
+
+            return View(results.ToList());
         }
     }
 }
