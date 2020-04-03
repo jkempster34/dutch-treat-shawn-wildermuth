@@ -21,5 +21,18 @@ namespace DutchTreat.Data.Entities
          * Because we will only be getting OrderItems when we get the containing Order, there isn't need
          * for it to have a DbSet.
          */
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Order>()
+                .HasData(new Order()
+                {
+                    Id = 1,
+                    OrderDate = DateTime.UtcNow,
+                    OrderNumber = "12345"
+                });
+        }
     }
 }

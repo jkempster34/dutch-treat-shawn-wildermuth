@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DutchTreat.Data;
 using DutchTreat.Data.Entities;
 using DutchTreat.Services;
 using Microsoft.AspNetCore.Builder;
@@ -32,6 +33,8 @@ namespace DutchTreat
             {
                 configuration.UseSqlServer(_config.GetConnectionString("DutchConnectionString"));
             });
+
+            services.AddTransient<DutchSeeder>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
