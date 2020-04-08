@@ -41,6 +41,8 @@ namespace DutchTreat
 
             services.AddTransient<IMailService, NullMailService>(); // Whenever the type 'IMailService' is asked for we get a new instance of the concrete 'NullMailService' type
             // Support for real mail service would go here 
+
+            services.AddScoped<IDutchRepository, DutchRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

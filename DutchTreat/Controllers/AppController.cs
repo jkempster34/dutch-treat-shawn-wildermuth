@@ -1,4 +1,5 @@
-﻿using DutchTreat.Data.Entities;
+﻿using DutchTreat.Data;
+using DutchTreat.Data.Entities;
 using DutchTreat.Services;
 using DutchTreat.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,7 @@ namespace DutchTreat.Controllers
     public class AppController : Controller
     {
         private readonly IMailService _mailService;
-        private readonly DutchContext _context;
+        private readonly IDutchRepository repository;
 
         /*
          * MVC controllers request dependencies via constructors. These depoendencies are 
@@ -20,15 +21,14 @@ namespace DutchTreat.Controllers
          * 
          * StartUp.cs is set up so that whenever a IMailService is requested, we get a new NullMailService.
          */
-        public AppController(IMailService mailService, DutchContext context)
+        public AppController(IMailService mailService, IDutchRepository repository)
         {
             _mailService = mailService;
-            _context = context;
+            this.repository = repository;
         }
 
         public IActionResult Index()
         {
-            var results = _context.Products.ToList();
             return View();
         }
 
@@ -63,11 +63,9 @@ namespace DutchTreat.Controllers
 
         public IActionResult Shop()
         {
-            var results = from product in _context.Products
-                          orderby product.Category
-                          select product;
+            var results = repository.GetAllProducts();
 
-            return View(results.ToList());
+            return View(results);
         }
     }
 }
