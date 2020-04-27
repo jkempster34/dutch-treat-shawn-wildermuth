@@ -32,10 +32,11 @@ namespace DutchTreat.Data
                 var products = JsonConvert.DeserializeObject<IEnumerable<Product>>(json);
                 _context.Products.AddRange(products);
 
-                var order = _context.Orders.Where(order => order.Id == 1).FirstOrDefault();
-                if (order != null)
+                var order = new Order()
                 {
-                    order.Items = new List<OrderItem>()
+                    OrderDate = DateTime.Now,
+                    OrderNumber = "12345",
+                    Items = new List<OrderItem>()
                     {
                         new OrderItem()
                         {
@@ -43,8 +44,10 @@ namespace DutchTreat.Data
                             Quantity = 5,
                             UnitPrice = products.First().Price
                         }
-                    };
-                }
+                    }
+                };
+
+                _context.Orders.Add(order);
 
                 _context.SaveChanges();
             }
