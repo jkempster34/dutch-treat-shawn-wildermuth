@@ -22,17 +22,17 @@ namespace DutchTreat.Data.Entities
          * for it to have a DbSet.
          */
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Order>()
-                .HasData(new Order()
-                {
-                    Id = 1,
-                    OrderDate = DateTime.UtcNow,
-                    OrderNumber = "12345"
-                });
-        }
+        //    modelBuilder.Entity<Order>()
+        //        .HasData(new Order()
+        //        {
+        //            Id = 1,
+        //            OrderDate = DateTime.UtcNow,
+        //            OrderNumber = "12345"
+        //        });
+        //}
     }
 }
