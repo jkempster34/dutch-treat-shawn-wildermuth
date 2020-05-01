@@ -10,6 +10,7 @@ using DutchTreat.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -33,6 +34,13 @@ namespace DutchTreat
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddIdentity<StoreUser, IdentityRole>(configuration =>
+            {
+                configuration.User.RequireUniqueEmail = true;
+
+            })
+                .AddEntityFrameworkStores<DutchContext>();
+
             services.AddDbContext<DutchContext>(configuration =>
             {
                 configuration.UseSqlServer(_config.GetConnectionString("DutchConnectionString"));
@@ -68,6 +76,7 @@ namespace DutchTreat
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseNodeModules();
+            app.UseAuthentication();
 
             /* 
              * When a URL hits the app, it is interpreted and mapped to the correct controller.
@@ -86,6 +95,7 @@ namespace DutchTreat
              */
 
             app.UseRouting();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
