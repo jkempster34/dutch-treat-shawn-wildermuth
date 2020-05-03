@@ -33,7 +33,9 @@ namespace DutchTreat.Controllers
         {
             try
             {
-                var results = _repository.GetAllOrders(includeItems);
+                var username = User.Identity.Name;
+
+                var results = _repository.GetAllOrdersByUser(username, includeItems);
 
                 return Ok(_mapper.Map<IEnumerable<Order>, IEnumerable<OrderViewModel>>(results));
             }
@@ -49,7 +51,7 @@ namespace DutchTreat.Controllers
         {
             try
             {
-                var order = _repository.GetOrderById(id);
+                var order = _repository.GetOrderById(User.Identity.Name, id);
                 // takes order that you pass in and returns an order viewmodel
                 if (order != null)
                     return Ok(_mapper.Map<Order, OrderViewModel>(order));
